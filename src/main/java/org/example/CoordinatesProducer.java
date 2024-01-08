@@ -22,13 +22,13 @@ public class CoordinatesProducer {
 
     public void sendCoordinate(String topic, Coordinate coordinate) {
         log.info("Sending coordinate to Kafka: {}", coordinate);
-        ProducerRecord<String, Coordinate> record = new ProducerRecord<>(topic, coordinate);
+        ProducerRecord<String, Coordinate> record = new ProducerRecord<>(topic, "" + (coordinate.id() % 2), coordinate);
         kafkaProducer.send(record);
     }
 
     public void generateCoordinates() throws InterruptedException {
         while (sentValuesCount < valuesCount) {
-            Coordinate coordinate = new Coordinate(Math.random() * 180 - 90, Math.random() * 360 - 180);
+            Coordinate coordinate = new Coordinate(sentValuesCount,Math.random() * 180 - 90, Math.random() * 360 - 180);
             sendCoordinate(topic, coordinate);
             sentValuesCount ++;
             Thread.sleep(sleepDelay);
