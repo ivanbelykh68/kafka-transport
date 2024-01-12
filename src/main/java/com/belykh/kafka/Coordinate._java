@@ -1,4 +1,4 @@
-package org.example;
+package com.belykh.kafka;
 
 public record Coordinate(int id, double lat, double lon) {
 

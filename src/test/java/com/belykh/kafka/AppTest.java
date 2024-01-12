@@ -1,4 +1,4 @@
-package org.example;
+package com.belykh.kafka;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

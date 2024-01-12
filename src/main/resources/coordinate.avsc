@@ -1,0 +1,18 @@
+{
+   "namespace": "com.belykh.kafka.avro",
+   "type": "record",
+   "name": "Coordinate",
+   "fields": [
+      {"name": "id", "type": "int"},
+      {"name": "lat", "type": "double"},
+      {"name": "lon", "type": "double"},
+      {
+        "name": "datetime",
+        "type": [
+            "null",
+            {"type": "long", "logicalType": "local-timestamp-millis"}
+        ],
+        "default": null
+      }
+   ]
+}

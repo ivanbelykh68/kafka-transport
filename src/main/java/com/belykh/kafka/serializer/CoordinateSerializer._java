@@ -1,6 +1,6 @@
-package org.example.serializer;
+package com.belykh.kafka.serializer;
 
-import org.example.Coordinate;
+import com.belykh.kafka.Coordinate;
 
 public class CoordinateSerializer extends JsonSerializer<Coordinate> {
     public CoordinateSerializer() {

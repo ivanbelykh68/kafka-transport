@@ -1,21 +1,24 @@
-package org.example;
+package com.belykh.kafka;
 
+import com.belykh.kafka.avro.Coordinate;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
 @Slf4j
-public class CoordinatesConsumer {
+public class CoordinatesConsumer implements Closeable {
 
     private final String topic;
     //private final int valuesCount;
     private final int sleepDelay;
     private final int workTime;
-    private KafkaConsumer<String, Coordinate> kafkaConsumer;
+    private final KafkaConsumer<String, Coordinate> kafkaConsumer;
 
     private int receivedValuesCount = 0;
     public CoordinatesConsumer(Properties props) {
@@ -33,10 +36,20 @@ public class CoordinatesConsumer {
 
     public void getCoordinates() {
         long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() < startTime + workTime) {
-            log.info("Getting coordinates from Kafka");
-            ConsumerRecords<String, Coordinate> coordinates = kafkaConsumer.poll(Duration.ofMillis(sleepDelay));
-            coordinates.forEach(r -> {receivedValuesCount ++; showCoordinate(r.value());});
+        try (kafkaConsumer) {
+            while (System.currentTimeMillis() < startTime + workTime) {
+                log.info("Getting coordinates from Kafka");
+                ConsumerRecords<String, Coordinate> coordinates = kafkaConsumer.poll(Duration.ofMillis(sleepDelay));
+                coordinates.forEach(r -> {
+                    receivedValuesCount++;
+                    showCoordinate(r.value());
+                });
+            }
         }
+    }
+
+    @Override
+    public void close() throws IOException {
+        kafkaConsumer.close();
     }
 }

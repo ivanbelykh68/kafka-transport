@@ -1,4 +1,4 @@
-package org.example.serializer;
+package com.belykh.kafka.serializer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

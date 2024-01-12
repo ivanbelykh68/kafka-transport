@@ -1,4 +1,4 @@
-package org.example;
+package com.belykh.kafka;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +15,7 @@ public class App
     public static void main( String[] args ) throws Exception {
         Properties props = new Properties();
         props.load(App.class.getClassLoader().getResourceAsStream("transport.properties"));
-        System.out.println("Loaded properties: " + props);
+        log.info("Loaded properties: {}", props);
         var producer = new CoordinatesProducer(props);
         var consumer = new CoordinatesConsumer(props);
 
@@ -28,10 +28,13 @@ public class App
         });
         CompletableFuture consumerFuture = CompletableFuture.runAsync(() -> consumer.getCoordinates());
 
-        System.out.println("Producer and consumer created");
+        log.info("Producer and consumer created");
 
         CompletableFuture.allOf(producerFuture, consumerFuture).join();
 
-        System.out.println("Finishing application");
+        log.info("Finishing application");
+
+        producer.close();
+        consumer.close();
     }
 }
