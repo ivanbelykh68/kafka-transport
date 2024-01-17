@@ -63,6 +63,14 @@
       <version>6.2.0</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-streams -->
+    <dependency>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-streams</artifactId>
+      <version>3.6.1</version>
+    </dependency>
+
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

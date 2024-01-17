@@ -6,6 +6,7 @@
       {"name": "id", "type": "int"},
       {"name": "lat", "type": "double"},
       {"name": "lon", "type": "double"},
+      {"name": "speed", "type": "double", "default": 1.0},
       {
         "name": "datetime",
         "type": [

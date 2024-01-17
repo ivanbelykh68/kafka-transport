@@ -1,1 +1,1 @@
-docker exec -it kafka sh
+docker exec -it broker sh

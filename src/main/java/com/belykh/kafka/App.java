@@ -18,6 +18,7 @@ public class App
         log.info("Loaded properties: {}", props);
         var producer = new CoordinatesProducer(props);
         var consumer = new CoordinatesConsumer(props);
+        var converter = new CoordinatesStreamConverter(props);
 
         CompletableFuture producerFuture = CompletableFuture.runAsync(() -> {
             try {
@@ -27,8 +28,9 @@ public class App
             }
         });
         CompletableFuture consumerFuture = CompletableFuture.runAsync(() -> consumer.getCoordinates());
+        CompletableFuture converterFuture = CompletableFuture.runAsync(() -> converter.start());
 
-        log.info("Producer and consumer created");
+        log.info("Producer, consumer and converter created");
 
         CompletableFuture.allOf(producerFuture, consumerFuture).join();
 
@@ -36,5 +38,6 @@ public class App
 
         producer.close();
         consumer.close();
+        converter.close();
     }
 }

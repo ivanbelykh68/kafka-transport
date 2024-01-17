@@ -57,7 +57,8 @@ public class CoordinatesProducer implements Closeable {
         boolean isVip = id == 7;
         double lat = isVip ? 37.2431 : Math.random() * 180 - 90;
         double lon = isVip ? 115.793 : Math.random() * 360 - 180;
-        return new Coordinate(sentValuesCount,lat, lon, LocalDateTime.now());
+        double speed = 1000 + id * 100 + ((double)id)/100;
+        return new Coordinate(sentValuesCount,lat, lon, speed, LocalDateTime.now());
     }
 
     @Override

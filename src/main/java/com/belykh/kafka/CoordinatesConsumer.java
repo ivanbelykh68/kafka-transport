@@ -16,7 +16,6 @@ import java.util.Properties;
 public class CoordinatesConsumer implements Closeable {
 
     private final String topicName;
-    //private final int valuesCount;
     private final int sleepDelay;
     private final int workTime;
     private final KafkaConsumer<String, Coordinate> kafkaConsumer;
@@ -24,7 +23,6 @@ public class CoordinatesConsumer implements Closeable {
     private int receivedValuesCount = 0;
     public CoordinatesConsumer(Properties props) {
         topicName = props.getProperty("coord.topic");
-        //valuesCount = Integer.valueOf(props.getProperty("kafka-transport.values.count"));
         sleepDelay = Integer.valueOf(props.getProperty("kafka-transport.consumer.sleep.delay"));
         workTime = Integer.valueOf(props.getProperty("kafka-transport.consumer.work.time"));
         kafkaConsumer = new KafkaConsumer<>(props);

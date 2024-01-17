@@ -11,11 +11,15 @@ public class CustomCoordinatePartitioner implements Partitioner {
     @Override
     public int partition(String topic, Object key, byte[] keyBytes, Object value, byte[] valueBytes, Cluster cluster) {
         int partitionCount = cluster.partitionCountForTopic(topic);
-
-        Coordinate coordinate = (Coordinate) value;
-        int calculatedPartition = coordinate.getLat() == 37.2431 && coordinate.getLon() == 115.793
-                ? 5
-                : Math.abs(Utils.murmur2(valueBytes) % partitionCount);
+        int calculatedPartition;
+        if(value instanceof Coordinate coordinate) {
+            calculatedPartition = coordinate.getLat() == 37.2431 && coordinate.getLon() == 115.793
+                    ? 5
+                    : Math.abs(Utils.murmur2(valueBytes) % partitionCount);
+        }
+        else {
+            calculatedPartition = Math.abs(Utils.murmur2(valueBytes) % partitionCount);
+        }
 
         return calculatedPartition >= partitionCount ? 0 : calculatedPartition;
     }
